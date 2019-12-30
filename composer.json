@@ -1,0 +1,6 @@
+{
+  "name": "mvc framework",
+  "require": {
+    "php": ">=7.2.0"
+  }
+}
