@@ -53,6 +53,60 @@ class Router
         return $router;
     }
 
+    private function getRegex($pattern, $params){
+        if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern))
+            return false; // Invalid pattern
+    
+        // "(/)" в "/?"
+        $pattern = preg_replace('#\(/\)#', '/?', $pattern);
+
+        // echo " pattern ".$pattern."\n";
+    
+        // Заменяем {parameter} на (?<parameter>[a-zA-Z0-9\_\-]+)
+        $allowedParamChars = preg_match('/{(.*)}/', $string, $matches);
+        // $allowedParamChars = '[a-zA-Z0-9\_\-]+';
+
+        // $pattern = preg_replace(
+        //     '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
+        //     '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+        //     $pattern
+        // );
+
+        // for ($i = 0; $i < $params; $i++) { 
+        //     $pattern = preg_replace(
+        //         '/{'. $params[""] .'}/',    # Replace "{parameter}"
+        //         '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+        //         $pattern
+        //     );
+        // }
+
+        foreach ($params as $key => $value) {
+            
+            $pattern = preg_replace(
+                '/{'. $key .'}/',    # Replace "{parameter}"
+                '(?< '. $key.'>'.$value . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+                $pattern
+            );
+            
+        }
+        echo $pattern."\n";
+        
+
+        $pattern = preg_replace(
+            '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
+            '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+            $pattern
+        );
+
+        // print_r($pattern);
+        // echo " ";
+    
+        // Превращаем в полноценный regex
+        $patternAsRegex = "@^" . $pattern . "$@D";
+    
+        return $patternAsRegex;
+    }
+
     public function route(): string
     {
         if (isset($_SERVER['REQUEST_URI'])) {
@@ -73,6 +127,8 @@ class Router
              * чтобы проверить эти переменные на соответствие параметрам
              */
             for ($i = 0; $i < count($router->routes); $i++) {
+                $router->getRegex($router->routes[$i]["uri"], $router->routes[$i]["params"])."\n";
+
                 // $string = $router->routes[$i]["uri"];
                 // $pattern = '/\{.*\}/i';
                 // preg_match($pattern, $string, $matches);
@@ -97,20 +153,20 @@ class Router
                  * ищем в /user/123/456 всё от /user/ до следующей /.
                  * Это будет значение id.
                  */
-                foreach ($router->routes[$i]["params"] as $key => $value) {
-                    // echo $router->routes[$i]["uri"]." ";
-                    // preg_match('/\{.*\}/', $router->routes[$i]["uri"], $matches, PREG_OFFSET_CAPTURE);
-                    // print_r($matches[0]);
+                // foreach ($router->routes[$i]["params"] as $key => $value) {
+                //     // echo $router->routes[$i]["uri"]." ";
+                //     // preg_match('/\{.*\}/', $router->routes[$i]["uri"], $matches, PREG_OFFSET_CAPTURE);
+                //     // print_r($matches[0]);
 
-                    $pos = strripos($router->routes[$i]["uri"], $key);
-                    // $replacement = '${1}1,$3';
-                    echo "POS: ".$pos;
-                    if( $pos > 0 ){
-                        echo $router->routes[$i]["uri"]." ";
-                        $match = substr($router->routes[$i]["uri"], 0, $pos);
-                    }
-                    // echo preg_replace($pattern, $replacement, $router->routes[$i]["uri"]);
-                }
+                //     $pos = strripos($router->routes[$i]["uri"], $key);
+                //     // $replacement = '${1}1,$3';
+                //     echo "POS: " . $pos;
+                //     if ($pos > 0) {
+                //         echo $router->routes[$i]["uri"] . " ";
+                //         $match = substr($router->routes[$i]["uri"], 0, $pos);
+                //     }
+                //     // echo preg_replace($pattern, $replacement, $router->routes[$i]["uri"]);
+                // }
             }
 
 
