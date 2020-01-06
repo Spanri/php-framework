@@ -10,6 +10,7 @@ class NewsController extends Controller
 {
     public function list()
     {
+        echo "LIST ";
         return 'list of news';
     }
 

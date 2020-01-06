@@ -2,7 +2,7 @@
 
 
 namespace lib;
-
+use lib\exceptions\FrameworkException;
 
 class Router
 {
@@ -22,166 +22,83 @@ class Router
     }
 
     /**
-     * Добавляем маршрут в массив маршрутов, при этом ключ - uri, а все остальное добавляется
-     * как ассоциативный массив к этому ключу. Например, так:
-     * lib\Router Object
-     *(
-     *   [routes:protected] => Array
-     *      (
-     *         [/] => Array
-     *              (
-     *                  [mask] => Index.index
-     *                  [params] => Array
-     *                  (
-     *                  )
-     *              )
-     *          [/other] => Array
-     *              (
-     *                  [mask] => Index.other
-     *                  [params] => Array
-     *                  (
-     *                  )
-     *              )
-     *       )
-     *)
+     * Превратить путь вместе с параметрами в regex
+     * @param $pattern
+     * @param $params
+     * @return bool|string
+     */
+    private function getRegex($pattern, $params){
+        if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern)) {
+            return false; // Неправильный паттерн пути
+        }
+
+        // Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
+        foreach ($params as $key => $value) {
+            $pattern = preg_replace(
+                '/{' . $key . '}/',
+                '(?&amp;lt;' . $key . '>' . $value . ')',
+                $pattern
+            );
+        }
+
+        // Превращаем в полноценный regex
+        return "@^" . htmlspecialchars_decode($pattern) . "$@D";
+    }
+
+    /**
+     * Добавляем маршрут в массив маршрутов
+     * @param string $uri
+     * @param string $mask
+     * @param array $params
+     * @return Router
      */
     public static function registerRoute(string $uri, string $mask, array $params = []): self
     {
         $router = static::getInstance();
-        $router->routes[] = array("uri" => $uri, "mask" => $mask, "params" => $params);
+        $regex = $router->getRegex($uri, $params);
+        $router->routes[] = array("regex" => $regex, "mask" => $mask);
 
         return $router;
     }
 
-    private function getRegex($pattern, $params){
-        if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern))
-            return false; // Invalid pattern
-    
-        // "(/)" в "/?"
-        $pattern = preg_replace('#\(/\)#', '/?', $pattern);
-
-        // echo " pattern ".$pattern."\n";
-    
-        // Заменяем {parameter} на (?<parameter>[a-zA-Z0-9\_\-]+)
-        $allowedParamChars = preg_match('/{(.*)}/', $string, $matches);
-        // $allowedParamChars = '[a-zA-Z0-9\_\-]+';
-
-        // $pattern = preg_replace(
-        //     '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
-        //     '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
-        //     $pattern
-        // );
-
-        // for ($i = 0; $i < $params; $i++) { 
-        //     $pattern = preg_replace(
-        //         '/{'. $params[""] .'}/',    # Replace "{parameter}"
-        //         '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
-        //         $pattern
-        //     );
-        // }
-
-        foreach ($params as $key => $value) {
-            
-            $pattern = preg_replace(
-                '/{'. $key .'}/',    # Replace "{parameter}"
-                '(?< '. $key.'>'.$value . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
-                $pattern
-            );
-            
-        }
-        echo $pattern."\n";
-        
-
-        $pattern = preg_replace(
-            '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
-            '(?<${1}>'. $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
-            $pattern
-        );
-
-        // print_r($pattern);
-        // echo " ";
-    
-        // Превращаем в полноценный regex
-        $patternAsRegex = "@^" . $pattern . "$@D";
-    
-        return $patternAsRegex;
-    }
-
+    /**
+     * Вызываем метод контроллера конкретного маршрута
+     * @return string результат выполнения метода
+     * @throws FrameworkException
+     */
     public function route(): string
     {
         if (isset($_SERVER['REQUEST_URI'])) {
-            /**
-             * Берем относительный путь из строки браузера,
-             * например, /news/1, где 1 - id
-             */
-
-            // $path = $_SERVER['REQUEST_URI'];
-            // echo $path . "\n";
-
+            $path = $_SERVER['REQUEST_URI'];
             $router = static::getInstance();
 
-            // echo "PATH: ".$router->routes[$path]["mask"]."  ";
+            // TODO
+            // оно не ищет сложный паттерн с параметрами, хотя паттерн подходит
 
-            /**
-             * Ищем в путях переменные в фигурных скобках, например {id},
-             * чтобы проверить эти переменные на соответствие параметрам
-             */
             for ($i = 0; $i < count($router->routes); $i++) {
-                $router->getRegex($router->routes[$i]["uri"], $router->routes[$i]["params"])."\n";
+                if(preg_match($router->routes[$i]["regex"], $path)) {
+                    echo "YES ".$i." ".$router->routes[$i]["regex"]." ; ";
+                    $mask = $router->routes[$i]["mask"];
+                    $controllerName = explode(".", $mask)[0];
+                    $controllerClass = explode(".", $mask)[1];
+                    $controller = "app\controllers\\{$controllerName}Controller.php";
 
-                // $string = $router->routes[$i]["uri"];
-                // $pattern = '/\{.*\}/i';
-                // preg_match($pattern, $string, $matches);
-                // echo "MATCHES: ";
-                // print_r($matches);
-                // $replacement = '${1}1,$3';
-                // echo preg_replace($pattern, $replacement, $string);
+                    // TODO
+                    // не выполняет метод класса
 
-                // print_r($router->routes[$i]);
-                // preg_match('/\{.*\}/', $router->routes[$i]["uri"], $matches, PREG_OFFSET_CAPTURE);
-                // echo "MATCHES: ";
-                // print_r($matches);
-                // echo "  ";
+                    require_once($controller);
+                    echo ($controllerName."Controller")->$controllerClass();
+                    ($controllerName."Controller")->$controllerClass();
 
-                /**
-                 * Ищем в параметрах найденную переменную и проверяем, соответствует
-                 * ли она паттерну
-                 */
-                /**
-                 * /user/123/456 и /user/{id}/{group}
-                 * Берем из /user/{id}/{group} /user/ (всё до {id}), после чего
-                 * ищем в /user/123/456 всё от /user/ до следующей /.
-                 * Это будет значение id.
-                 */
-                // foreach ($router->routes[$i]["params"] as $key => $value) {
-                //     // echo $router->routes[$i]["uri"]." ";
-                //     // preg_match('/\{.*\}/', $router->routes[$i]["uri"], $matches, PREG_OFFSET_CAPTURE);
-                //     // print_r($matches[0]);
+                    echo $controller;
+                } else {
 
-                //     $pos = strripos($router->routes[$i]["uri"], $key);
-                //     // $replacement = '${1}1,$3';
-                //     echo "POS: " . $pos;
-                //     if ($pos > 0) {
-                //         echo $router->routes[$i]["uri"] . " ";
-                //         $match = substr($router->routes[$i]["uri"], 0, $pos);
-                //     }
-                //     // echo preg_replace($pattern, $replacement, $router->routes[$i]["uri"]);
-                // }
+                }
             }
-
-
-
-            // $router->routes[$path]["mask"]();
-            // use {};
-
-            // TODO $_SERVER['REQUEST_URI'];
-
-            $result = "null\n";
+            return "Путь по паттерну не найден";
         } else {
-            $result = "123\n";
+            throw new FrameworkException("REQUEST_URI not found");
         }
-
-        return $result;
     }
 
     protected function __construct()
