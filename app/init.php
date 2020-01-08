@@ -13,4 +13,4 @@ Router::registerRoute('/user/{group}/{username}/', 'User.get', [
     'username' => '[A-Za-z][A-Za-z0-9_]{3,}',
 ]);
 
-// print_r(Router::getInstance());
+print_r(Router::getInstance());

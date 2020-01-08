@@ -15,7 +15,7 @@ class App
     {
         try {
             $this->init();
-            echo "ROUTE: ".Router::getInstance()->route();
+            echo Router::getInstance()->route();
         } catch(FrameworkException $e) {
             echo "Framework Error: {$e->getMessage()}\n";
         } catch(\Throwable $e) {

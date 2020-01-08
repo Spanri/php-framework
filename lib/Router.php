@@ -45,6 +45,14 @@ class Router
         return "@^" . htmlspecialchars_decode($pattern) . "$@D";
     }
 
+    private function getMaskArray($mask){
+        if (!preg_match('/^.+\..+$/', $mask)) {
+            return false; // Неправильный паттерн маски
+        }
+
+        return explode(".", $mask);
+    }
+
     /**
      * Добавляем маршрут в массив маршрутов
      * @param string $uri
@@ -56,7 +64,16 @@ class Router
     {
         $router = static::getInstance();
         $regex = $router->getRegex($uri, $params);
-        $router->routes[] = array("regex" => $regex, "mask" => $mask);
+
+        $maskArray = $router->getMaskArray($mask);
+
+        $router->routes[] = array("regex" => $regex, "controllerName" => $maskArray[0], "controllerMethod" => $maskArray[1]);
+
+        // TODO
+        // Не подключает контроллер
+
+        $controller = "app/controllers/{$maskArray[0]}Controller.php";
+        require_once($controller);
 
         return $router;
     }
@@ -77,25 +94,19 @@ class Router
 
             for ($i = 0; $i < count($router->routes); $i++) {
                 if(preg_match($router->routes[$i]["regex"], $path)) {
+
                     echo "YES ".$i." ".$router->routes[$i]["regex"]." ; ";
-                    $mask = $router->routes[$i]["mask"];
-                    $controllerName = explode(".", $mask)[0];
-                    $controllerClass = explode(".", $mask)[1];
-                    $controller = "app\controllers\\{$controllerName}Controller.php";
 
                     // TODO
                     // не выполняет метод класса
 
-                    require_once($controller);
-                    echo ($controllerName."Controller")->$controllerClass();
-                    ($controllerName."Controller")->$controllerClass();
-
-                    echo $controller;
-                } else {
-
+                    $controllerName = $router->routes[$i]["controllerName"];
+                    $controllerClass = $router->routes[$i]["controllerMethod"];
+                    return ($controllerName."Controller")->$controllerClass();;
                 }
             }
-            return "Путь по паттерну не найден";
+
+            throw new FrameworkException("Path not found");
         } else {
             throw new FrameworkException("REQUEST_URI not found");
         }
