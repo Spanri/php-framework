@@ -4,7 +4,6 @@
     <list default="true" id="849bedcd-4769-4931-8af7-1d9c8c1b7a64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/init.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/App.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/error.log" afterDir="false" />
@@ -34,7 +33,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/exceptions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -74,6 +73,8 @@
       <workItem from="1578498949218" duration="174000" />
       <workItem from="1578499132154" duration="612000" />
       <workItem from="1578499753878" duration="373000" />
+      <workItem from="1578554210411" duration="467000" />
+      <workItem from="1578561723878" duration="1462000" />
     </task>
     <servers />
   </component>
@@ -85,9 +86,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="256" key="#xdebugger.evaluate/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1577123644748" />
-    <state x="560" y="150" width="860" height="814" key="CommitChangelistDialog2" timestamp="1578342587859">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2" timestamp="1578562576097">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578562576097" />
     <state x="560" y="150" width="860" height="814" key="CommitChangelistDialog2/70.27.1850.1053@70.27.1850.1053" timestamp="1578342587859" />
     <state width="1807" height="344" key="GridCell.Tab.0.bottom" timestamp="1577121388983">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -145,9 +147,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="789" y="478" width="399" height="149" key="NewPhpFileDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1577121917337" />
-    <state x="651" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578498952253">
-      <screen x="70" y="27" width="1850" height="1053" />
+    <state x="2523" y="362" key="com.intellij.ide.util.TipDialog" timestamp="1578554213291">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2523" y="362" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578554213291" />
     <state x="651" y="380" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1578498952253" />
     <state x="516" y="456" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1578499120205">
       <screen x="70" y="27" width="1850" height="1053" />

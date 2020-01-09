@@ -33,6 +33,8 @@ class Router
         }
 
         // Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
+        // если в regex будет <что-то>, то оно просто исчезает (???), поэтому < меняем на ?&amp;lt;
+        // и потом переделываем обратно с помощью htmlspecialchars_decode в return
         foreach ($params as $key => $value) {
             $pattern = preg_replace(
                 '/{' . $key . '}/',
@@ -62,18 +64,18 @@ class Router
      */
     public static function registerRoute(string $uri, string $mask, array $params = []): self
     {
+        // Получаем инстанс роутера
         $router = static::getInstance();
-        $regex = $router->getRegex($uri, $params);
 
+        // Парсим входные данные функции и получаем данные для добавления их в массив маршрутов
+        $regex = $router->getRegex($uri, $params);
         $maskArray = $router->getMaskArray($mask);
 
+        // Добавляем распарсенные данные в массив маршрутов
         $router->routes[] = array("regex" => $regex, "controllerName" => $maskArray[0], "controllerMethod" => $maskArray[1]);
 
-        // TODO
-        // Не подключает контроллер
-
-        $controller = "app/controllers/{$maskArray[0]}Controller.php";
-        require_once($controller);
+        // Подключаем контроллер
+        require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR."{$maskArray[0]}Controller.php";
 
         return $router;
     }
@@ -90,19 +92,26 @@ class Router
             $router = static::getInstance();
 
             // TODO
-            // оно не ищет сложный паттерн с параметрами, хотя паттерн подходит
+            // оно не ищет сложный паттерн с параметрами, хотя паттерн подходит, если смотреть в regex101.com
+            // @^/news/(?<id>[0-9]+)/$@D
+            // /news/13/
+            // там ищет, а тут нет
 
             for ($i = 0; $i < count($router->routes); $i++) {
-                if(preg_match($router->routes[$i]["regex"], $path)) {
+                preg_match($router->routes[$i]["regex"], $path, $matches, PREG_OFFSET_CAPTURE);
+                echo $router->routes[$i]["regex"];
+                echo "  ".$path."  ";
+                print_r($matches);
 
-                    echo "YES ".$i." ".$router->routes[$i]["regex"]." ; ";
+                if(preg_match($router->routes[$i]["regex"], $path)) {
+//                    echo "YES ".$i." ".$router->routes[$i]["regex"]." ; ";
 
                     // TODO
                     // не выполняет метод класса
 
                     $controllerName = $router->routes[$i]["controllerName"];
                     $controllerClass = $router->routes[$i]["controllerMethod"];
-                    return ($controllerName."Controller")->$controllerClass();;
+                    return $controllerName->$controllerClass();
                 }
             }
 
