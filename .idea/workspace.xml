@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="849bedcd-4769-4931-8af7-1d9c8c1b7a64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/init.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/App.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/error.log" afterDir="false" />
     </list>
@@ -35,6 +32,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/exceptions" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -74,6 +77,8 @@
       <workItem from="1578498949218" duration="174000" />
       <workItem from="1578499132154" duration="612000" />
       <workItem from="1578499753878" duration="373000" />
+      <workItem from="1578500510409" duration="1308000" />
+      <workItem from="1578513125844" duration="244000" />
     </task>
     <servers />
   </component>
