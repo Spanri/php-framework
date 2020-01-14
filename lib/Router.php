@@ -28,7 +28,7 @@ class Router
      * @param string $uri
      * @param string $mask
      * @param array $params
-     * @return Router
+     * @return static
      */
     public static function registerRoute(string $uri, string $mask, array $params = []): self
     {
@@ -41,14 +41,6 @@ class Router
 
         // Добавляем распарсенные данные в массив маршрутов
         $router->routes[] = array("regex" => $regex, "controllerName" => $maskArray[0], "controllerMethod" => $maskArray[1]);
-
-        // Подключаем контроллер
-        require_once (
-            dirname(__DIR__).DIRECTORY_SEPARATOR
-            .'app'.DIRECTORY_SEPARATOR
-            .'controllers'.DIRECTORY_SEPARATOR
-            ."{$maskArray[0]}Controller.php"
-        );
 
         return $router;
     }
@@ -70,33 +62,33 @@ class Router
             // /news/13/
             // там ищет, а тут нет
 
-//            echo " " . $url . "  ";
-
             for ($i = 0; $i < count($router->routes); $i++) {
                 preg_match($router->routes[$i]["regex"], $url, $matches);
-                echo " || " . $router->routes[$i]["regex"] . " => ";
-                print_r($matches);
 
                 if (preg_match($router->routes[$i]["regex"], $url)) {
-//                    echo "YES ".$i." ".$router->routes[$i]["regex"]." ; ";
+                    // TODO убрать потом
+                    // если найден путь, показывает паттерн и что найдено
+                    echo $router->routes[$i]["regex"] . " => ";
+                    print_r($matches);
+                    echo " || ";
+                    //
 
-                    // TODO
-                    // не выполняет метод класса
-
-                    $controllerName = $router->routes[$i]["controllerName"]."Controller";
+                    $controllerName = 'app\\controllers\\'.$router->routes[$i]["controllerName"]."Controller";
                     $controllerMethod = $router->routes[$i]["controllerMethod"];
 
-//                    $object = new $controllerName();
-                    $a = dirname(__DIR__).DIRECTORY_SEPARATOR
-                        .'app'.DIRECTORY_SEPARATOR
-                        .'controllers'.DIRECTORY_SEPARATOR
-                        ."{$controllerName}";
-                    $object = new $a();
-//                    $object = new IndexController();
-
+                    $object = new $controllerName();
                     return $object->$controllerMethod();
                 }
             }
+
+            // TODO убрать потом
+            // если нет пути, показывает паттерн, для которого не найдено и сам путь
+            for ($i = 0; $i < count($router->routes); $i++) {
+                preg_match($router->routes[$i]["regex"], $url, $matches);
+                echo $router->routes[$i]["regex"] . " || ";
+            }
+            echo ' $url: ' . $url . "  ||  ";
+            //
 
             throw new FrameworkException("Path not found");
         } else {
@@ -115,9 +107,11 @@ class Router
             return false; // Неправильный паттерн пути
         }
 
-        // Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
-        // если в regex будет <что-то>, то оно просто исчезает (???), поэтому < меняем на ?&amp;lt;
-        // и потом переделываем обратно с помощью htmlspecialchars_decode в return
+        /**
+         * Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
+         * если в regex будет <что-то>, то оно просто исчезает (???), поэтому < меняем на ?&amp;lt;
+         * и потом переделываем обратно с помощью htmlspecialchars_decode в return
+         */
         foreach ($params as $key => $value) {
             $pattern = preg_replace(
                 '/{' . $key . '}/',
@@ -126,11 +120,20 @@ class Router
             );
         }
 
-        // Превращаем в полноценный regex
+        /**
+         * Превращаем в полноценный regex, преобразовывая всякие
+         * ?&amp;lt в нормальные символы
+         */
         return "@^" . htmlspecialchars_decode($pattern) . "$@D";
     }
 
-        private function getMaskArray($mask){
+    /**
+     * Есть класс и метод, записанные как Class.Method
+     * Делаем из этой строки массив
+     * @param $mask
+     * @return array|bool
+     */
+    private function getMaskArray($mask){
         if (!preg_match('/^.+\..+$/', $mask)) {
             return false; // Неправильный паттерн маски
         }

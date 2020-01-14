@@ -17,4 +17,9 @@ class IndexController extends Controller
     {
         return 'i am an other!';
     }
+
+    public function __toString()
+    {
+        return "Index! ";
+    }
 }

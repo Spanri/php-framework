@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="849bedcd-4769-4931-8af7-1d9c8c1b7a64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/NewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/NewsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/App.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/App.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Router.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/error.log" afterDir="false" />
@@ -75,6 +79,8 @@
       <workItem from="1578554210411" duration="467000" />
       <workItem from="1578561723878" duration="3478000" />
       <workItem from="1578897329811" duration="8032000" />
+      <workItem from="1578931381416" duration="44000" />
+      <workItem from="1578984772788" duration="7231000" />
     </task>
     <servers />
   </component>
@@ -82,19 +88,23 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="2699" y="241" width="412" height="631" key="#com.intellij.ide.util.MemberChooser" timestamp="1578986292442">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2699" y="241" width="412" height="631" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578986292442" />
     <state x="751" y="256" key="#xdebugger.evaluate" timestamp="1577123644748">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="751" y="256" key="#xdebugger.evaluate/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1577123644748" />
-    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2" timestamp="1578925076483">
+    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2" timestamp="1578986288925">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578925076483" />
+    <state x="2429" y="126" width="860" height="814" key="CommitChangelistDialog2/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578986288925" />
     <state x="560" y="150" width="860" height="814" key="CommitChangelistDialog2/70.27.1850.1053@70.27.1850.1053" timestamp="1578342587859" />
-    <state x="2693" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1578922155742">
+    <state x="2693" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1578996115609">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2693" y="311" width="424" height="491" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578922155742" />
+    <state x="2693" y="311" width="424" height="491" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1578996115609" />
     <state width="1807" height="344" key="GridCell.Tab.0.bottom" timestamp="1577121388983">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
