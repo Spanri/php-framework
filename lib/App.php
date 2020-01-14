@@ -3,7 +3,6 @@
 
 namespace lib;
 
-
 use lib\exceptions\FatalFrameworkException;
 use lib\exceptions\FrameworkException;
 

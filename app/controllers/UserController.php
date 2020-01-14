@@ -12,4 +12,9 @@ class UserController extends Controller
     {
 
     }
+
+    public function __toString()
+    {
+        return "Index! ";
+    }
 }
