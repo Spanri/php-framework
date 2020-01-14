@@ -58,39 +58,24 @@ class Router
             $url = $this->url;
             $router = static::getInstance();
 
-            // TODO
-            // оно не ищет сложный паттерн с параметрами, хотя паттерн подходит, если смотреть в regex101.com
-            // @^/news/(?<id>[0-9]+)/$@D
-            // /news/13/
-            // там ищет, а тут нет
-
-            foreach($router->routes as $route) {
+            foreach ($router->routes as $route) {
                 if (preg_match($route["regex"], $url, $matches)) {
-                    // TODO убрать потом
-                    // если найден путь, показывает паттерн и что найдено
-                    echo $route["regex"] . " => ";
-                    print_r($matches);
-                    echo " || ";
-                    //
+                    if (count($matches) > 1) {
+                        $params = $this->getParams($matches);
+                    }
 
                     $controllerName = 'app\\controllers\\' . $route["controllerName"] . "Controller";
                     $controllerMethod = $route["controllerMethod"];
 
                     $object = new $controllerName();
-                    return $object->$controllerMethod();
+
+                    if (count($matches) > 1) {
+                        return $object->$controllerMethod(...array_values($params));
+                    } else {
+                        return $object->$controllerMethod();
+                    }
                 }
             }
-
-            exit;
-
-            // TODO убрать потом
-            // если нет пути, показывает паттерн, для которого не найдено и сам путь
-            for ($i = 0; $i < count($router->routes); $i++) {
-                preg_match($router->routes[$i]["regex"], $url, $matches);
-                echo $router->routes[$i]["regex"] . " || ";
-            }
-            echo ' $url: ' . $url . "  ||  ";
-            //
 
             throw new FrameworkException("Path not found");
         } else {
@@ -99,22 +84,33 @@ class Router
     }
 
     /**
+     * @param $params
+     * @param $values
+     * @return Array
+     */
+    private function getParams($params): Array
+    {
+        $array = [];
+
+        foreach ($params as $key => $value) {
+            if (!preg_match("@^[0-9]$@", $key)) {
+                $array[$key] = $value;
+            }
+        }
+
+        return $array;
+
+    }
+
+    /**
      * Превратить путь вместе с параметрами в regex
      * @param $pattern
      * @param $params
-     * @return bool|string
+     * @return string
      */
-    private function getRegex($pattern, $params)
+    private function getRegex($pattern, $params): string
     {
-        if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern)) {
-            return false; // Неправильный паттерн пути
-        }
-
-        /**
-         * Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
-         * если в regex будет <что-то>, то оно просто исчезает (???), поэтому < меняем на &amp;lt;
-         * и потом переделываем обратно с помощью htmlspecialchars_decode в return
-         */
+        // Заменяем каждый параметр в паттерне на "(?<параметр>[правило_параметра]+)"
         foreach ($params as $key => $value) {
             $pattern = preg_replace(
                 '/{' . $key . '}/',
@@ -123,11 +119,8 @@ class Router
             );
         }
 
-        /**
-         * Превращаем в полноценный regex, преобразовывая всякие
-         * &amp;lt в нормальные символы
-         */
-        return "@^" . htmlspecialchars_decode($pattern) . "$@D";
+        // Превращаем в полноценный regex
+        return "@^" . $pattern . "$@D";
     }
 
     /**

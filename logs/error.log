@@ -360,3 +360,11 @@
 [Wed Jan 08 19:02:47.022246 2020] [php7:error] [pid 1111] [client 127.0.0.1:60442] PHP Fatal error:  require_once(): Failed opening required 'app/controllers/IndexController.php' (include_path='.:/usr/share/php') in /var/www/annamvc.lo/lib/Router.php on line 63
 [Wed Jan 08 19:42:58.491291 2020] [php7:warn] [pid 941] [client 127.0.0.1:34026] PHP Warning:  require_once(app/controllers/IndexController.php): failed to open stream: No such file or directory in /var/www/annamvc.lo/lib/Router.php on line 76
 [Wed Jan 08 19:42:58.491960 2020] [php7:error] [pid 941] [client 127.0.0.1:34026] PHP Fatal error:  require_once(): Failed opening required 'app/controllers/IndexController.php' (include_path='.:/usr/share/php') in /var/www/annamvc.lo/lib/Router.php on line 76
+[Tue Jan 14 20:23:27.348395 2020] [php7:notice] [pid 6936] [client 127.0.0.1:57856] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 63
+[Tue Jan 14 20:34:54.952623 2020] [php7:notice] [pid 6913] [client 127.0.0.1:58120] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 65
+[Tue Jan 14 20:34:54.952660 2020] [php7:warn] [pid 6913] [client 127.0.0.1:58120] PHP Warning:  Use of undefined constant length - assumed 'length' (this will throw an Error in a future version of PHP) in /var/www/annamvc.lo/lib/Router.php on line 65
+[Tue Jan 14 20:42:51.891126 2020] [php7:notice] [pid 6914] [client 127.0.0.1:58250] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 97
+[Tue Jan 14 20:43:08.368364 2020] [php7:notice] [pid 6913] [client 127.0.0.1:58256] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 97
+[Tue Jan 14 20:43:44.299048 2020] [php7:notice] [pid 6936] [client 127.0.0.1:58264] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 99
+[Tue Jan 14 20:44:19.792542 2020] [php7:notice] [pid 6910] [client 127.0.0.1:58272] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 100
+[Tue Jan 14 20:55:44.041856 2020] [php7:notice] [pid 6914] [client 127.0.0.1:58432] PHP Notice:  Array to string conversion in /var/www/annamvc.lo/lib/Router.php on line 74
