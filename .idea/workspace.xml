@@ -4,6 +4,7 @@
     <list default="true" id="849bedcd-4769-4931-8af7-1d9c8c1b7a64" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/QueryBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/QueryBuilder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +84,7 @@
       <workItem from="1578499753878" duration="373000" />
       <workItem from="1578500510409" duration="1308000" />
       <workItem from="1578513125844" duration="244000" />
-      <workItem from="1579537379077" duration="1153000" />
+      <workItem from="1579537379077" duration="1692000" />
     </task>
     <servers />
   </component>

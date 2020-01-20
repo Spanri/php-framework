@@ -14,6 +14,9 @@ namespace lib;
  */
 class QueryBuilder
 {
+    const OPERATOR_AND = 'and';
+    const OPERATOR_OR = 'or';
+
     public static function select(string $from, $fields = '*'): self
     {
 
@@ -40,6 +43,16 @@ class QueryBuilder
     }
 
     public function join(string $tableName, string $on, string $type = 'left'): self
+    {
+
+    }
+
+    public function openBracket(string $operator): self
+    {
+
+    }
+
+    public function closeBracket(): self
     {
 
     }

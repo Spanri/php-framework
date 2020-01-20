@@ -38,6 +38,21 @@ class IndexController extends Controller
         return $sql;
     }
 
+    public function testSelectBraket()
+    {
+        $sql = QueryBuilder::select('my_table')
+            ->where('price', '>', 0)
+            ->openBracket(QueryBuilder::OPERATOR_OR)
+            ->where('id', '>', 100)
+            ->openBracket(QueryBuilder::OPERATOR_AND)
+            ->where('discount', '=', 0.2)
+            ->orWhere('discount', '=', 0.5)
+            ->closeBracket()
+            ->closeBracket()
+            ->getRawSql();
+        return $sql;
+    }
+
     public function testInsert()
     {
         $sql = QueryBuilder::insert('my_table', [
